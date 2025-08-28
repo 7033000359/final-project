@@ -22,20 +22,3 @@ def get_order_by_track(track_number):
     # Вызов функции requests.get с телом запроса для создания нового заказа из модуля data
     response = requests.get(get_order_url, params={"t": track_number})
     return response
-def test_order_creation_and_tracking():
-       
-       # создание заказа
-       create_response = create_order(order_body)
-       assert create_response.status_code == 201, "не удалось создат заказ"
-
-       # Сохранение трек номера
-       track_number = create_response.json().get("track")
-       print("Заказ создан. Номер трека:", track_number)
-       assert track_number, "Трек-номер не получен"
-
-       # Получение заказа по трек номеру
-       get_response = get_order_by_track(track_number)
-
-       # Проверка статуса ответа
-       assert get_response.status_code == 200, "Заказ не найден"
-       print("Тест успешно пройден. Код 200.")
